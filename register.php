@@ -55,120 +55,196 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --background-color: #ecf0f1;
+            --text-color: #2c3e50;
+        }
+
         body {
-            background-color: #f8f9fa;
-            font-family: 'Arial', sans-serif;
+            background-color: var(--background-color);
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            color: var(--text-color);
+            line-height: 1.6;
         }
-        header {
-            background: linear-gradient(135deg, #0062cc, #0056b3);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+        .navbar {
+            background: var(--primary-color);
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
-        .container {
-            max-width: 800px;
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: 600;
         }
+
         main {
-            background-color: white;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            margin: 3rem auto;
+            max-width: 900px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            padding: 2.5rem;
         }
+
+        .form-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .form-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
         .form-group {
             margin-bottom: 1.5rem;
+            position: relative;
         }
+
         .form-control {
-            border-radius: 5px;
-            border: 1px solid #ddd;
-            padding: 10px;
-        }
-        .form-control:focus {
-            border-color: #0062cc;
-            box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
-        }
-        label {
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 0.5rem;
-        }
-        .btn-primary {
-            background: linear-gradient(135deg, #0062cc, #0056b3);
-            border: none;
-            padding: 10px 30px;
-            border-radius: 5px;
-            font-weight: 600;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 1rem;
             transition: all 0.3s ease;
         }
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+
+        .form-control:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+            outline: none;
         }
+
+        label {
+            font-weight: 500;
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
         h2 {
-            color: #0056b3;
+            color: var(--primary-color);
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
             border-bottom: 2px solid #eee;
-            padding-bottom: 10px;
-            margin-top: 2rem;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--secondary-color);
+        }
+
+        .btn-primary {
+            background: var(--secondary-color);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            width: 100%;
+            max-width: 200px;
+        }
+
+        .btn-primary:hover {
+            background: #2980b9;
+            transform: translateY(-1px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        /* Error message styling */
+        .error-message {
+            background: #fff3f3;
+            color: var(--accent-color);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--accent-color);
         }
     </style>
 </head>
 
 <body>
-    <header class="bg-primary text-white py-3">
+    <nav class="navbar navbar-dark">
         <div class="container">
-            <h1 class="display-4">Nutrition Tracker - Register</h1>
+            <span class="navbar-brand">Nutrition Tracker</span>
         </div>
-    </header>
-    <main class="container mt-4">
+    </nav>
+
+    <main class="container">
         <form id="register-form" method="post" action="">
-            <h2 class="mb-3">Personal Information</h2>
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" class="form-control" required>
-            </div>
+            <h2>Create Your Account</h2>
+            <div class="form-section">
+                <div>
+                    <h3 class="section-title">Personal Information</h3>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" class="form-control" required>
+                    </div>
 
-            <div class="form-group">
-                <label for="first_name">First Name:</label>
-                <input type="text" id="first_name" name="first_name" class="form-control" required>
-            </div>
+                    <div class="form-group">
+                        <label for="first_name">First Name:</label>
+                        <input type="text" id="first_name" name="first_name" class="form-control" required>
+                    </div>
 
-            <div class="form-group">
-                <label for="last_name">Last Name:</label>
-                <input type="text" id="last_name" name="last_name" class="form-control" required>
-            </div>
+                    <div class="form-group">
+                        <label for="last_name">Last Name:</label>
+                        <input type="text" id="last_name" name="last_name" class="form-control" required>
+                    </div>
 
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" class="form-control" required>
-            </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password" class="form-control" required>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="section-title">BMI Information</h3>
+                    <div class="form-group">
+                        <label for="gender">Gender:</label>
+                        <select name="gender" id="gender" class="form-control">
+                            <?php
+                            $gender_query = "SELECT * FROM gender";
+                            $gender_result = $conn->query($gender_query);
+                            while ($gender_row = $gender_result->fetch_assoc()) {
+                                echo "<option value='{$gender_row['gid']}'>{$gender_row['gendervalue']}</option>";
+                            }
+                            ?>
+                        </select>
+                    </div>
 
-            <h2 class="mb-3">BMI Information</h2>
-            <div class="form-group">
-                <label for="gender">Gender:</label>
-                <select name="gender" id="gender" class="form-control">
-                    <?php
-                    $gender_query = "SELECT * FROM gender";
-                    $gender_result = $conn->query($gender_query);
-                    while ($gender_row = $gender_result->fetch_assoc()) {
-                        echo "<option value='{$gender_row['gid']}'>{$gender_row['gendervalue']}</option>";
-                    }
-                    ?>
-                </select>
-            </div>
+                    <div class="form-group">
+                        <label for="birthdate">Birthdate:</label>
+                        <input type="date" id="birthdate" name="birthdate" class="form-control" required>
+                    </div>
 
-            <div class="form-group">
-                <label for="birthdate">Birthdate:</label>
-                <input type="date" id="birthdate" name="birthdate" class="form-control" required>
-            </div>
+                    <div class="form-group">
+                        <label for="height">Height (cm):</label>
+                        <input type="number" id="height" name="height" class="form-control" required>
+                    </div>
 
-            <div class="form-group">
-                <label for="height">Height (cm):</label>
-                <input type="number" id="height" name="height" class="form-control" required>
+                    <div class="form-group">
+                        <label for="weight">Weight (kg):</label>
+                        <input type="number" id="weight" name="weight" class="form-control" required>
+                    </div>
+                </div>
             </div>
-
-            <div class="form-group">
-                <label for="weight">Weight (kg):</label>
-                <input type="number" id="weight" name="weight" class="form-control" required>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Create Account</button>
             </div>
-
-            <button type="submit" class="btn btn-primary">Register</button>
         </form>
     </main>
 </body>
