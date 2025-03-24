@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (password_verify($password, $stored_hashed_password)) {
             if ($user['status'] === '1') {
                 $_SESSION['email'] = $user['email'];
-                header("Location:consumption.php");
+                header("Location:home.php");
                 exit();
             } else {
                 $error_message = "Your account status is not accepted.";
