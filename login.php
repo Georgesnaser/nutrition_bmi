@@ -48,7 +48,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- Removed reCAPTCHA script -->
     <style>
         body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: url('https://images.unsplash.com/photo-1490818387583-1baba5e638af?auto=format&fit=crop&q=80') no-repeat center center fixed;
+            background-size: cover;
             min-height: 100vh;
         }
         .login-container {
@@ -56,10 +57,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             margin: 50px auto;
         }
         .login-form {
-            background: white;
+            background: rgba(255, 255, 255, 0.95);
             border-radius: 15px;
             padding: 30px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
         }
         .logo {
             text-align: center;

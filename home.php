@@ -70,7 +70,9 @@ mysqli_close($conn);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         body {
-            background-color: #f8f9fa;
+            background-image: url('https://www.toptal.com/designers/subtlepatterns/uploads/double-bubble-outline.png');
+            background-repeat: repeat;
+            background-attachment: fixed;
         }
         .dashboard-container {
             max-width: 900px;
@@ -81,6 +83,7 @@ mysqli_close($conn);
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             border: none;
             transition: transform 0.2s;
+            background-color: rgba(255, 255, 255, 0.95);
         }
         .info-card:hover {
             transform: translateY(-5px);
@@ -98,6 +101,7 @@ mysqli_close($conn);
         }
         .modal-content {
             border-radius: 15px;
+            background-color: rgba(255, 255, 255, 0.98);
         }
     </style>
 </head>
@@ -282,10 +286,6 @@ mysqli_close($conn);
             $update_bmi = "UPDATE bmi SET birthDate='$birthdate', genderID='$genderID', height='$height', weight='$weight' WHERE bid='$bid'";
 
             if (mysqli_query($conn, $update_user) && mysqli_query($conn, $update_bmi)) {
-                echo "<script>alert('Information updated successfully!'); window.location.href = 'home.php';</script>";
-            } else {
-                echo "Error updating record: " . mysqli_error($conn);
-            }
         }
 
         mysqli_close($conn);
