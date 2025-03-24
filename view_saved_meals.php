@@ -21,13 +21,20 @@ $totalProtein = 0;
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background: linear-gradient(135deg, #fdf9f3 0%, #f6e6ff 100%);
+            background: linear-gradient(135deg, #43C6AC 0%, #191654 100%);
+            min-height: 100vh;
+            position: relative;
+        }
+        body::before {
+            display: none;
         }
         .meal-card {
             margin-bottom: 25px;
             transition: transform 0.3s ease;
             box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-            background: white;
+            backdrop-filter: blur(5px);
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
         .meal-card:hover {
             transform: translateY(-5px);
@@ -80,7 +87,8 @@ $totalProtein = 0;
             margin-top: 30px;
             border: none;
             border-radius: 15px;
-            background: white;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(5px);
             text-align: center;
             box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
         }

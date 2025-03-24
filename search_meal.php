@@ -60,13 +60,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background-color: #f8f9fa;
+            background-color: #f0f2f5;
+            background-image: linear-gradient(30deg, #f8f9fa 12%, transparent 12.5%, transparent 87%, #f8f9fa 87.5%, #f8f9fa),
+            linear-gradient(150deg, #f8f9fa 12%, transparent 12.5%, transparent 87%, #f8f9fa 87.5%, #f8f9fa),
+            linear-gradient(30deg, #f8f9fa 12%, transparent 12.5%, transparent 87%, #f8f9fa 87.5%, #f8f9fa),
+            linear-gradient(150deg, #f8f9fa 12%, transparent 12.5%, transparent 87%, #f8f9fa 87.5%, #f8f9fa),
+            linear-gradient(60deg, #e3e7ea 25%, transparent 25.5%, transparent 75%, #e3e7ea 75%, #e3e7ea),
+            linear-gradient(60deg, #e3e7ea 25%, transparent 25.5%, transparent 75%, #e3e7ea 75%, #e3e7ea);
+            background-size: 80px 140px;
+            background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
             font-family: 'Arial', sans-serif;
         }
         
         .container {
-            max-width: 1200px;
-            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            margin-top: 30px;
+            margin-bottom: 30px;
+            padding: 30px;
         }
 
         h2 {

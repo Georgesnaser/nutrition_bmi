@@ -59,6 +59,10 @@
     <style>
         body {
             background-color: #f8f9fa;
+            background-image: linear-gradient(45deg, #f3f4f6 25%, transparent 25%, transparent 75%, #f3f4f6 75%, #f3f4f6), 
+                            linear-gradient(45deg, #f3f4f6 25%, transparent 25%, transparent 75%, #f3f4f6 75%, #f3f4f6);
+            background-size: 60px 60px;
+            background-position: 0 0, 30px 30px;
         }
         .custom-card {
             border-radius: 15px;

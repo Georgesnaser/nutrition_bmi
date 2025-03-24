@@ -27,8 +27,26 @@
 <head>
     <style>
         body {
-            background-color: #f5f5f5;
+            background: linear-gradient(135deg, #9fd3c7 0%, #385170 100%);
+            background-attachment: fixed;
             font-family: 'Arial', sans-serif;
+            position: relative;
+            margin: 0;
+            min-height: 100vh;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 100% 50%, transparent 20%, rgba(255,255,255,0.03) 21%, rgba(255,255,255,0.03) 34%, transparent 35%, transparent),
+                radial-gradient(circle at 0% 50%, transparent 20%, rgba(255,255,255,0.03) 21%, rgba(255,255,255,0.03) 34%, transparent 35%, transparent) 0 -50px;
+            background-size: 75px 100px;
+            pointer-events: none;
+            z-index: -1;
         }
         .custom-container {
             max-width: 800px;

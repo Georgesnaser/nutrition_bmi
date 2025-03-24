@@ -286,6 +286,10 @@ mysqli_close($conn);
             $update_bmi = "UPDATE bmi SET birthDate='$birthdate', genderID='$genderID', height='$height', weight='$weight' WHERE bid='$bid'";
 
             if (mysqli_query($conn, $update_user) && mysqli_query($conn, $update_bmi)) {
+                echo "<script>alert('Information updated successfully!'); window.location.href = 'home.php';</script>";
+            } else {
+                echo "Error updating record: " . mysqli_error($conn);
+            }
         }
 
         mysqli_close($conn);
