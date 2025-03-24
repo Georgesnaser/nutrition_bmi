@@ -177,17 +177,7 @@ $historyResult->data_seek(0);
         });
     }
 </script>
-<script>
-document.getElementById('searchInput').addEventListener('keyup', function() {
-    let input = this.value.toLowerCase();
-    let cards = document.getElementsByClassName('card');
-    
-    Array.from(cards).forEach(card => {
-        let text = card.textContent.toLowerCase();
-        card.parentElement.style.display = text.includes(input) ? '' : 'none';
-    });
-});
-</script>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

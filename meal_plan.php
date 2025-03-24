@@ -165,16 +165,6 @@ include 'nav.php';
         });
     </script>
 
-<script>
-document.getElementById('searchInput').addEventListener('keyup', function() {
-    let input = this.value.toLowerCase();
-    let cards = document.getElementsByClassName('card');
-    
-    Array.from(cards).forEach(card => {
-        let text = card.textContent.toLowerCase();
-        card.parentElement.style.display = text.includes(input) ? '' : 'none';
-    });
-});
-</script>
+
 </body>
 </html>
