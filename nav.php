@@ -82,7 +82,10 @@ $current_page = basename($_SERVER['PHP_SELF']);
         </div>
     </div>
 </nav>
-
+<script>
+document.addEventListener('contextmenu', event => event.preventDefault());
+document.addEventListener('selectstart', event => event.preventDefault());
+</script>
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 

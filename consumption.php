@@ -100,16 +100,5 @@ $userEmail = $_SESSION['email'];
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-document.getElementById('searchInput').addEventListener('keyup', function() {
-    let input = this.value.toLowerCase();
-    let cards = document.getElementsByClassName('card');
-    
-    Array.from(cards).forEach(card => {
-        let text = card.textContent.toLowerCase();
-        card.parentElement.style.display = text.includes(input) ? '' : 'none';
-    });
-});
-</script>
 </body>
 </html>
