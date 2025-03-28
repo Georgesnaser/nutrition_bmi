@@ -122,6 +122,17 @@ $totalProtein = 0;
             background: linear-gradient(45deg, #ff8e8e 0%, #ff6b6b 100%);
             transform: translateY(-2px);
         }
+        .btn-warning {
+            background: linear-gradient(45deg, #f6d365 0%, #fda085 100%);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        .btn-warning:hover {
+            background: linear-gradient(45deg, #fda085 0%, #f6d365 100%);
+            transform: translateY(-2px);
+        }
         h2 {
             color: #4a154b;
             font-weight: 700;
@@ -144,7 +155,10 @@ $totalProtein = 0;
                                 <p class="card-text"><?= htmlspecialchars($row['instructions']) ?></p>
                                 <p class="card-text"><strong>Calories:</strong> <?= htmlspecialchars($row['calories']) ?></p>
                                 <p class="card-text"><strong>Protein:</strong> <?= htmlspecialchars($row['protein']) ?>g</p>
-                                <a href="<?= htmlspecialchars($row['source']) ?>" class="btn btn-primary" target="_blank">View Recipe</a>
+                                <div class="d-flex justify-content-between">
+                                    <a href="<?= htmlspecialchars($row['source']) ?>" class="btn btn-primary" target="_blank">View Recipe</a>
+                                    <a href="replace_meal.php?meal_name=<?= urlencode($row['name']) ?>" class="btn btn-warning">Replace</a>
+                                </div>
                             </div>
                         </div>
                     </div>

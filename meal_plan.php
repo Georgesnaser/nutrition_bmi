@@ -1,11 +1,14 @@
 <?php
 include 'conx.php';
 include 'nav.php';
+
+// Check for existing valid meal plan
+$query = "SELECT week_data FROM meal_plans WHERE valid_until > NOW() ORDER BY created_at DESC LIMIT 1";
+$result = mysqli_query($conn, $query);
+$existingPlan = mysqli_fetch_assoc($result);
 ?>
 
 <body>
-    
-
     <main class="container mt-5">
         <section>
             <h2>Your Weekly Meal Plan</h2>
@@ -24,19 +27,45 @@ include 'nav.php';
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const apiKey = "f99adf078c7b4a23a510ef22b8f1e7e8";
-            const demoUrl =`https://api.spoonacular.com/mealplanner/generate?timeFrame=week&apiKey=${apiKey}&targetCalories=1800&diet=high-protein&minProtein=100&maxCalories=2000&exclude=fried,deep-fried,pan-fried&tags=baked,roasted,grilled`;
+            const demoUrl = `https://api.spoonacular.com/mealplanner/generate?timeFrame=week&apiKey=${apiKey}&targetCalories=1800&diet=high-protein&minProtein=100&maxCalories=2000&exclude=fried,deep-fried,pan-fried&tags=baked,roasted,grilled`;
+
+            // Check localStorage first, then PHP data
+            const localStoragePlan = localStorage.getItem('weeklyMealPlan');
+            const existingPlan = <?php echo $existingPlan ? $existingPlan['week_data'] : 'null'; ?>;
+
+            // Check if we're returning from view_planner_meals.php with a replacement
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('replace') === 'true') {
+                const day = urlParams.get('day');
+                const mealId = parseInt(urlParams.get('mealId'));
+                const newFoodId = urlParams.get('newFoodId');
+                if (day && mealId && newFoodId) {
+                    replaceMealWithFood(day, mealId, newFoodId);
+                }
+            }
 
             async function fetchMealPlan() {
                 try {
+                    if (localStoragePlan) {
+                        displayMealPlan(JSON.parse(localStoragePlan));
+                        return;
+                    }
+                    
+                    if (existingPlan) {
+                        displayMealPlan(existingPlan);
+                        localStorage.setItem('weeklyMealPlan', JSON.stringify(existingPlan));
+                        return;
+                    }
+
                     const response = await fetch(demoUrl);
                     if (!response.ok) {
                         throw new Error(`HTTP error! Status: ${response.status}`);
                     }
                     const data = await response.json();
-                    console.log("API Response:", data); // For debugging
                     if (data.week) {
                         displayMealPlan(data.week);
-                        document.getElementById('save-button').addEventListener('click', () => saveMealPlanToDatabase(data.week));
+                        localStorage.setItem('weeklyMealPlan', JSON.stringify(data.week));
+                        saveMealPlanToDatabase(data.week);
                     } else {
                         throw new Error("Invalid response format");
                     }
@@ -75,14 +104,18 @@ include 'nav.php';
                                                     <p><i class="far fa-clock mr-2"></i>${meal.readyInMinutes} minutes</p>
                                                     <p><i class="fas fa-users mr-2"></i>${meal.servings} servings</p>
                                                     <div class="mt-auto">
-                                                        <a href="${meal.sourceUrl}" class="btn btn-primary mb-2" target="_blank">
+                                                        <a href="${meal.sourceUrl}" class="btn btn-primary btn-sm mb-2" target="_blank">
                                                             <i class="fas fa-external-link-alt mr-2"></i>View Recipe
                                                         </a>
-                                                        <a href="addfood.php?id=${meal.id}&title=${encodeURIComponent(meal.title)}&servings=${meal.servings}" class="btn btn-success mb-2">
+                                                        <a href="addfood.php?id=${meal.id}&title=${encodeURIComponent(meal.title)}&servings=${meal.servings}" 
+                                                            class="btn btn-success btn-sm mb-2">
                                                             <i class="fas fa-plus mr-2"></i>Add to Planner
                                                         </a>
-                                                        <button onclick="deleteFromPlanner(${meal.id})" class="btn btn-danger">
-                                                            <i class="fas fa-trash mr-2"></i>Delete from Planner
+                                                        <button onclick="window.location.href='view_saved_meals.php?day=${day}&mealId=${meal.id}'" class="btn btn-warning btn-sm mb-2">
+                                                            <i class="fas fa-exchange-alt mr-2"></i>Replace Meal
+                                                        </button>
+                                                        <button onclick="deleteFromPlanner(${meal.id})" class="btn btn-danger btn-sm">
+                                                            <i class="fas fa-trash mr-2"></i>Delete
                                                         </button>
                                                     </div>
                                                 </div>
@@ -140,7 +173,10 @@ include 'nav.php';
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify(weekData)
+                        body: JSON.stringify({
+                            weekData: weekData,
+                            validUntil: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString()
+                        })
                     });
                     if (!response.ok) {
                         throw new Error(`HTTP error! Status: ${response.status}`);
@@ -219,6 +255,35 @@ include 'nav.php';
                 }
             }
 
+            async function replaceMealWithFood(day, mealId, newFoodId) {
+                const apiKey = "f99adf078c7b4a23a510ef22b8f1e7e8";
+                try {
+                    const response = await fetch(`https://api.spoonacular.com/recipes/${newFoodId}/information?apiKey=${apiKey}`);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    const newMeal = await response.json();
+                    const weekPlan = JSON.parse(localStorage.getItem('weeklyMealPlan'));
+                    
+                    weekPlan[day].meals = weekPlan[day].meals.map(meal => 
+                        meal.id === mealId ? {
+                            id: newMeal.id,
+                            title: newMeal.title,
+                            readyInMinutes: newMeal.readyInMinutes,
+                            servings: newMeal.servings,
+                            sourceUrl: newMeal.sourceUrl
+                        } : meal
+                    );
+                    
+                    localStorage.setItem('weeklyMealPlan', JSON.stringify(weekPlan));
+                    displayMealPlan(weekPlan);
+                    saveMealPlanToDatabase(weekPlan);
+                } catch (error) {
+                    console.error("Error replacing meal:", error);
+                    alert('Failed to replace meal');
+                }
+            }
+
             document.getElementById('export-button').addEventListener('click', async () => {
                 try {
                     const response = await fetch(demoUrl);
@@ -239,7 +304,5 @@ include 'nav.php';
             fetchMealPlan();
         });
     </script>
-
-
 </body>
 </html>

@@ -31,7 +31,7 @@ if ($conn) {
             </div>
             <div class="card-body">
                 <div class="mb-4 text-center">
-                    <a href="addfood_search.php" class="btn btn-info">
+                    <a href="search_meal.php" class="btn btn-info">
                         <i class="fas fa-search"></i> Search for Different Meals
                     </a>
                 </div>

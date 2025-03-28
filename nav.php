@@ -63,18 +63,14 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     <a class="nav-link <?= $current_page == 'consumption.php' ? 'active' : '' ?>" href="consumption.php"><i class="fas fa-utensils me-1"></i>Consumption</a>
                 </li>
                 
-                <li class="nav-item">
-                    <a class="nav-link <?= $current_page == 'search_meal.php' ? 'active' : '' ?>" href="search_meal.php"><i class="fas fa-search me-1"></i>Search Meal</a>
-                </li>
+                
                 <li class="nav-item">
                     <a class="nav-link <?= $current_page == 'contact.php' ? 'active' : '' ?>" href="contact.php"><i class="fas fa-envelope me-1"></i>Contact us</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link <?= $current_page == 'about.php' ? 'active' : '' ?>" href="about.php"><i class="fas fa-info-circle me-1"></i>About us</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="view_saved_meals.php"><i class="fas fa-bookmark me-1"></i>Saved Meals</a>
-                </li>
+                
                 <li class="nav-item">
                     <a class="nav-link <?= $current_page == 'logout.php' ? 'active' : '' ?>" href="logout.php"><i class="fas fa-sign-out-alt me-1"></i>Logout</a>
                 </li>
@@ -82,10 +78,10 @@ $current_page = basename($_SERVER['PHP_SELF']);
         </div>
     </div>
 </nav>
-<script>
+<!-- <script>
 document.addEventListener('contextmenu', event => event.preventDefault());
 document.addEventListener('selectstart', event => event.preventDefault());
-</script>
+</script> -->
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
