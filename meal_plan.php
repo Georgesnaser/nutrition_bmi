@@ -74,9 +74,17 @@ include 'nav.php';
                                                     <h5 class="card-title">${meal.title}</h5>
                                                     <p><i class="far fa-clock mr-2"></i>${meal.readyInMinutes} minutes</p>
                                                     <p><i class="fas fa-users mr-2"></i>${meal.servings} servings</p>
-                                                    <a href="${meal.sourceUrl}" class="btn btn-primary mt-auto" target="_blank">
-                                                        <i class="fas fa-external-link-alt mr-2"></i>View Recipe
-                                                    </a>
+                                                    <div class="mt-auto">
+                                                        <a href="${meal.sourceUrl}" class="btn btn-primary mb-2" target="_blank">
+                                                            <i class="fas fa-external-link-alt mr-2"></i>View Recipe
+                                                        </a>
+                                                        <a href="addfood.php?id=${meal.id}&title=${encodeURIComponent(meal.title)}&servings=${meal.servings}" class="btn btn-success mb-2">
+                                                            <i class="fas fa-plus mr-2"></i>Add to Planner
+                                                        </a>
+                                                        <button onclick="deleteFromPlanner(${meal.id})" class="btn btn-danger">
+                                                            <i class="fas fa-trash mr-2"></i>Delete from Planner
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -141,6 +149,73 @@ include 'nav.php';
                     console.log("Save to DB Response:", result);
                 } catch (error) {
                     console.error("Error saving meal plan to database:", error);
+                }
+            }
+
+            async function addToPlanner(recipeId, title, servings) {
+                const apiKey = "f99adf078c7b4a23a510ef22b8f1e7e8";
+                const url = `https://api.spoonacular.com/mealplanner/dsky/items?apiKey=${apiKey}`;
+                
+                const date = new Date();
+                const formattedDate = date.getFullYear() + 
+                                    '-' + String(date.getMonth() + 1).padStart(2, '0') + 
+                                    '-' + String(date.getDate()).padStart(2, '0');
+
+                const mealData = {
+                    date: formattedDate,
+                    slot: 1,
+                    position: 0,
+                    type: "RECIPE",
+                    value: {
+                        id: recipeId,
+                        title: title,
+                        servings: servings
+                    }
+                };
+
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(mealData)
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+
+                    const result = await response.json();
+                    alert('Recipe added to your meal planner successfully!');
+                } catch (error) {
+                    console.error("Error adding to meal planner:", error);
+                    alert('Failed to add recipe to meal planner');
+                }
+            }
+
+            async function deleteFromPlanner(recipeId) {
+                const apiKey = "f99adf078c7b4a23a510ef22b8f1e7e8";
+                const hash = "4b5v4398573406"; // Your hash value
+                const url = `https://api.spoonacular.com/mealplanner/dsky/items/${recipeId}?hash=${hash}&apiKey=${apiKey}`;
+
+                try {
+                    const response = await fetch(url, {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+
+                    const result = await response.json();
+                    alert('Recipe deleted from your meal planner successfully!');
+                } catch (error) {
+                    console.error("Error deleting from meal planner:", error);
+                    alert('Failed to delete recipe from meal planner');
                 }
             }
 
