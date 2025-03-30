@@ -256,9 +256,9 @@ $existingPlan = mysqli_fetch_assoc($result);
             }
 
             async function replaceMealWithFood(day, mealId, newFoodId) {
-                const apiKey = "f99adf078c7b4a23a510ef22b8f1e7e8";
                 try {
-                    const response = await fetch(`https://api.spoonacular.com/recipes/${newFoodId}/information?apiKey=${apiKey}`);
+                    // Fetch saved meal from database instead of API
+                    const response = await fetch(`get_saved_meal.php?id=${newFoodId}`);
                     if (!response.ok) {
                         throw new Error(`HTTP error! Status: ${response.status}`);
                     }
@@ -268,10 +268,10 @@ $existingPlan = mysqli_fetch_assoc($result);
                     weekPlan[day].meals = weekPlan[day].meals.map(meal => 
                         meal.id === mealId ? {
                             id: newMeal.id,
-                            title: newMeal.title,
-                            readyInMinutes: newMeal.readyInMinutes,
-                            servings: newMeal.servings,
-                            sourceUrl: newMeal.sourceUrl
+                            title: newMeal.name, // Changed from title to name to match database
+                            readyInMinutes: 30, // Default value since it's not in saved meals
+                            servings: 1, // Default value since it's not in saved meals
+                            sourceUrl: newMeal.source
                         } : meal
                     );
                     

@@ -5,11 +5,14 @@ include 'conx.php'; // Include database connection
 
 $userEmail = $_SESSION['email']; // Get the user's email from the session
 
-$sql = "SELECT name, thumb, instructions, source, calories, protein FROM extrameal WHERE email='$userEmail'";
+$sql = "SELECT id, name, thumb, instructions, source, calories, protein FROM extrameal WHERE email='$userEmail'";
 $result = $conn->query($sql);
 
 $totalCalories = 0;
 $totalProtein = 0;
+
+$day = isset($_GET['day']) ? $_GET['day'] : '';
+$mealId = isset($_GET['mealId']) ? $_GET['mealId'] : '';
 ?>
 
 <!DOCTYPE html>
@@ -157,7 +160,7 @@ $totalProtein = 0;
                                 <p class="card-text"><strong>Protein:</strong> <?= htmlspecialchars($row['protein']) ?>g</p>
                                 <div class="d-flex justify-content-between">
                                     <a href="<?= htmlspecialchars($row['source']) ?>" class="btn btn-primary" target="_blank">View Recipe</a>
-                                    <a href="replace_meal.php?meal_name=<?= urlencode($row['name']) ?>" class="btn btn-warning">Replace</a>
+                                    <button onclick="replaceMeal('<?= htmlspecialchars($row['name']) ?>', '<?= $day ?>', <?= $mealId ?>, <?= $row['id'] ?>)" class="btn btn-warning">Replace</button> <!-- to replace the meal  --> 
                                 </div>
                             </div>
                         </div>
@@ -191,6 +194,13 @@ $totalProtein = 0;
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+    function replaceMeal(mealName, day, originalMealId, newFoodId) {
+        if (confirm(`Do you want to replace the original meal with ${mealName}?`)) {
+            window.location.href = `meal_plan.php?replace=true&day=${day}&mealId=${originalMealId}&newFoodId=${newFoodId}`;
+        }
+    }
+    </script>
 </body>
 </html>
 
