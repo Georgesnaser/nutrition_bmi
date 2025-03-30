@@ -197,6 +197,7 @@ $mealId = isset($_GET['mealId']) ? $_GET['mealId'] : '';
     <script>
     function replaceMeal(mealName, day, originalMealId, newFoodId) {
         if (confirm(`Do you want to replace the original meal with ${mealName}?`)) {
+            // Navigate back to meal_plan.php with replacement parameters
             window.location.href = `meal_plan.php?replace=true&day=${day}&mealId=${originalMealId}&newFoodId=${newFoodId}`;
         }
     }
