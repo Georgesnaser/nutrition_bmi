@@ -152,7 +152,15 @@
                     </div>
                     <div class="d-flex justify-content-center gap-2">
                         <a href="export.php" class="btn btn-custom text-white">Download Progress Report</a>
-                        <a href="meal_plan.php" class="btn btn-custom text-white">Get Meal Plan</a>
+                        <?php
+                        $checkPlan = "SELECT id FROM plan WHERE userEmail='$email' AND statusID=4 LIMIT 1";
+                        $planResult = $conn->query($checkPlan);
+                        if ($planResult->num_rows > 0) {
+                            echo '<a href="meal_plan.php" class="btn btn-custom text-white">Get Meal Plan</a>';
+                        } else {
+                            echo '<a href="#" onclick="showNoPlanAlert()" class="btn btn-custom text-white">Get Meal Plan</a>';
+                        }
+                        ?>
                     </div>
                 </div>
             </div>
@@ -216,5 +224,11 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+function showNoPlanAlert() {
+    alert('Please create a nutrition plan first before accessing the meal plan!');
+    return false;
+}
+</script>
 </body>
 </html>
