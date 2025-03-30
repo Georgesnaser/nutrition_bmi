@@ -142,11 +142,33 @@ $mealId = isset($_GET['mealId']) ? $_GET['mealId'] : '';
             margin-bottom: 2rem;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
         }
+        .search-button {
+            background: linear-gradient(45deg, #4CAF50 0%, #45a049 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            margin-left: 15px;
+        }
+        .search-button:hover {
+            background: linear-gradient(45deg, #45a049 0%, #4CAF50 100%);
+            transform: translateY(-2px);
+        }
+        .header-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
     </style>
 </head>
 <body>
     <main class="container mt-5">
-        <h2 class="text-center mb-4">Saved Meals</h2>
+        <div class="header-container">
+            <h2 class="text-center mb-0">Saved Meals</h2>
+            <a href="search_meal.php" class="btn search-button">Search New Meals</a>
+        </div>
         <?php if ($result->num_rows > 0): ?>
             <div class="row">
                 <?php while($row = $result->fetch_assoc()): ?>
