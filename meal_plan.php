@@ -193,25 +193,69 @@ include 'nav.php';
                                     `).join('')}
                                 </div>
                                 ${dayMeals.nutrients ? `
-                                    <div class="nutrition-summary row">
+                                    <div class="nutrition-summary row mt-4">
                                         <div class="col-md-6">
-                                            <h4 class="text-center mb-3">Original Nutrition Summary</h4>
-                                            <ul>
-                                                <li><i class="fas fa-fire-alt mr-2"></i><strong>Calories:</strong><br>${Math.round(dayMeals.originalNutrients?.calories || dayMeals.nutrients.calories)} kcal</li>
-                                                <li><i class="fas fa-drumstick-bite mr-2"></i><strong>Protein:</strong><br>${Math.round(dayMeals.originalNutrients?.protein || dayMeals.nutrients.protein)} g</li>
-                                                <li><i class="fas fa-cheese mr-2"></i><strong>Fat:</strong><br>${Math.round(dayMeals.originalNutrients?.fat || dayMeals.nutrients.fat)} g</li>
-                                                <li><i class="fas fa-bread-slice mr-2"></i><strong>Carbs:</strong><br>${Math.round(dayMeals.originalNutrients?.carbohydrates || dayMeals.nutrients.carbohydrates)} g</li>
-                                            </ul>
+                                            <div class="card">
+                                                <div class="card-header bg-light">
+                                                    <h5 class="mb-0">Original Nutrition Summary</h5>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-6 mb-3">
+                                                            <i class="fas fa-fire-alt text-danger"></i>
+                                                            <strong>Calories</strong>
+                                                            <div>${Math.round(dayMeals.originalNutrients?.calories || dayMeals.nutrients.calories)} kcal</div>
+                                                        </div>
+                                                        <div class="col-6 mb-3">
+                                                            <i class="fas fa-drumstick-bite text-success"></i>
+                                                            <strong>Protein</strong>
+                                                            <div>${Math.round(dayMeals.originalNutrients?.protein || dayMeals.nutrients.protein)} g</div>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <i class="fas fa-cheese text-warning"></i>
+                                                            <strong>Fat</strong>
+                                                            <div>${Math.round(dayMeals.originalNutrients?.fat || dayMeals.nutrients.fat)} g</div>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <i class="fas fa-bread-slice text-primary"></i>
+                                                            <strong>Carbs</strong>
+                                                            <div>${Math.round(dayMeals.originalNutrients?.carbohydrates || dayMeals.nutrients.carbohydrates)} g</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                         ${dayMeals.replacementNutrients ? `
                                         <div class="col-md-6">
-                                            <h4 class="text-center mb-3">Updated Nutrition Summary</h4>
-                                            <ul>
-                                                <li><i class="fas fa-fire-alt mr-2"></i><strong>Calories:</strong><br>${Math.round(dayMeals.replacementNutrients.calories)} kcal</li>
-                                                <li><i class="fas fa-drumstick-bite mr-2"></i><strong>Protein:</strong><br>${Math.round(dayMeals.replacementNutrients.protein)} g</li>
-                                                <li><i class="fas fa-cheese mr-2"></i><strong>Fat:</strong><br>${Math.round(dayMeals.replacementNutrients.fat || 0)} g</li>
-                                                <li><i class="fas fa-bread-slice mr-2"></i><strong>Carbs:</strong><br>${Math.round(dayMeals.replacementNutrients.carbohydrates || 0)} g</li>
-                                            </ul>
+                                            <div class="card">
+                                                <div class="card-header bg-light">
+                                                    <h5 class="mb-0">Updated Nutrition Summary</h5>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-6 mb-3">
+                                                            <i class="fas fa-fire-alt text-danger"></i>
+                                                            <strong>Calories</strong>
+                                                            <div>${Math.round(dayMeals.replacementNutrients.calories)} kcal</div>
+                                                        </div>
+                                                        <div class="col-6 mb-3">
+                                                            <i class="fas fa-drumstick-bite text-success"></i>
+                                                            <strong>Protein</strong>
+                                                            <div>${Math.round(dayMeals.replacementNutrients.protein)} g</div>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <i class="fas fa-cheese text-warning"></i>
+                                                            <strong>Fat</strong>
+                                                            <div>${Math.round(dayMeals.replacementNutrients.fat || 0)} g</div>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <i class="fas fa-bread-slice text-primary"></i>
+                                                            <strong>Carbs</strong>
+                                                            <div>${Math.round(dayMeals.replacementNutrients.carbohydrates || 0)} g</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                         ` : ''}
                                     </div>
